@@ -1,12 +1,12 @@
-# ²ßÂÔ
-## µÈÈ¨PE-PB¼ÆËã
+ï»¿# ç­–ç•¥
+## ç­‰æƒPE-PBè®¡ç®—
 ```
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import bisect
 
-#Ö¸¶¨ÈÕÆÚµÄÖ¸ÊıPE£¨µÈÈ¨ÖØ£©
+#æŒ‡å®šæ—¥æœŸçš„æŒ‡æ•°PEï¼ˆç­‰æƒé‡ï¼‰
 def get_index_pe_date(index_code,date):
     stocks = get_index_stocks(index_code, date)
     q = query(valuation).filter(valuation.code.in_(stocks))
@@ -17,7 +17,7 @@ def get_index_pe_date(index_code,date):
     else:
         return float('NaN')
 
-#Ö¸¶¨ÈÕÆÚµÄÖ¸ÊıPB£¨µÈÈ¨ÖØ£©
+#æŒ‡å®šæ—¥æœŸçš„æŒ‡æ•°PBï¼ˆç­‰æƒé‡ï¼‰
 def get_index_pb_date(index_code,date):
     stocks = get_index_stocks(index_code, date)
     q = query(valuation).filter(valuation.code.in_(stocks))
@@ -28,7 +28,7 @@ def get_index_pb_date(index_code,date):
     else:
         return float('NaN')
     
-#Ö¸ÊıÀúÊ·PEPB
+#æŒ‡æ•°å†å²PEPB
 def get_index_pe_pb(index_code):
     start='2005-1-1'
     #start='2015-1-1'
@@ -36,7 +36,7 @@ def get_index_pe_pb(index_code):
     dates=[]
     pes=[]
     pbs=[]
-    for d in pd.date_range(start,end,freq='M'): #ÆµÂÊÎªÔÂ
+    for d in pd.date_range(start,end,freq='M'): #é¢‘ç‡ä¸ºæœˆ
         dates.append(d)
         pes.append(get_index_pe_date(index_code,d))
         pbs.append(get_index_pb_date(index_code,d))
@@ -65,7 +65,7 @@ frames=pd.DataFrame()
 today= pd.datetime.today()
 for code in index_choose:
     index_name = all_index.ix[code].display_name  
-    print u'ÕıÔÚ´¦Àí: ',index_name   
+    print u'æ­£åœ¨å¤„ç†: ',index_name   
     df_pe_pb=get_index_pe_pb(code)    
 
     
@@ -96,7 +96,7 @@ for code in index_choose:
     df_pe_pb['90% PB']=q_pbs[9]
 
     df_pe_pb.plot(secondary_y=['PB','10% PB','50% PB','90% PB'],figsize=(14,8),title=index_name,style=['k-.', 'k', 'g', 'y', 'r', 'g-.', 'y-.', 'r-.']) 
-    columns=[u'Ãû³Æ',u'µ±Ç°¹ÀÖµ',u'·ÖÎ»µã%',u'×îĞ¡¹ÀÖµ']+['%d%%'% (i*10) for i in range(1,10)]+[u'×î´ó¹ÀÖµ' , u"Êı¾İ¸öÊı"]
+    columns=[u'åç§°',u'å½“å‰ä¼°å€¼',u'åˆ†ä½ç‚¹%',u'æœ€å°ä¼°å€¼']+['%d%%'% (i*10) for i in range(1,10)]+[u'æœ€å¤§ä¼°å€¼' , u"æ•°æ®ä¸ªæ•°"]
     df= pd.DataFrame(data=results,index=['PE','PB'],columns=columns)
     frames = pd.concat([frames, df])
 frames  
